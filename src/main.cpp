@@ -14,6 +14,7 @@ int main(int argc, char *argv[])
     }
     long long chunk_size = stoll(argv[1]);
     ExternalSort("../data/data.txt", chunk_size);
+    cout << "External sort completed." << endl;
     ifstream data_file("../data/sorted_data.txt");
     if (!data_file.is_open())
     {
