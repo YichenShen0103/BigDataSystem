@@ -10,7 +10,11 @@
 
 namespace fs = std::filesystem;
 
-// 分块读取文件并统计频度
+/*
+ * @brief 从文件中读取数据，统计每个数字的频度，并将结果写入临时文件
+ * @param file_path 输入文件路径
+ * @return 无
+ */
 void Count::count_frequencies_in_chunk(const std::string &file_path)
 {
     std::ifstream input_file(file_path);
@@ -58,7 +62,10 @@ void Count::count_frequencies_in_chunk(const std::string &file_path)
     input_file.close();
 }
 
-// 合并临时文件
+/*
+ * @brief 合并临时文件
+ * @return 返回最终的频度统计结果
+ */
 std::map<int, int> Count::merge_temp_files()
 {
     std::map<int, int> final_frequency;
@@ -82,13 +89,22 @@ std::map<int, int> Count::merge_temp_files()
     return final_frequency;
 }
 
-// 清理临时文件
+/*
+ * @brief 清理临时文件
+ * @return 无
+ */
 void Count::cleanup_temp_files()
 {
     for (const auto &entry : fs::directory_iterator(cache_path))
         fs::remove(entry.path());
 }
 
+/*
+ * @brief 外部接口
+ * @param file_path 输入文件路径
+ * @param output_file_path 输出文件路径
+ * @return 无
+ */
 void Count::fit(std::string file_path, std::string output_file_path)
 {
     count_frequencies_in_chunk(file_path);
@@ -110,6 +126,11 @@ void Count::fit(std::string file_path, std::string output_file_path)
     output.close();
 }
 
+/*
+ * @brief 将最终的频度统计结果写入文件
+ * @param final_frequency 最终的频度统计结果
+ * @param output_file_path 输出文件路径
+ */
 void Count::write_results_to_file(const std::map<int, int> &final_frequency, const std::string &output_file_path)
 {
     std::ofstream output_file(output_file_path);
@@ -125,6 +146,11 @@ void Count::write_results_to_file(const std::map<int, int> &final_frequency, con
     output_file.close();
 }
 
+/*
+ * @brief 构造函数
+ * @param cache_path 临时文件存储路径
+ * @param chunk_size 块大小
+ */
 Count::Count(std::string cache_path, size_t chunk_size) : cache_path(cache_path), chunk_size(chunk_size)
 {
     std::filesystem::create_directory(cache_path);

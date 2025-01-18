@@ -1,6 +1,12 @@
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import col, expr
 
+"""
+Process the large dataset 
+input_path: str, path to the input file
+output_path: str, path to the output file
+"""
+
 
 def process_large_dataset(input_path, output_path):
     spark = SparkSession.builder \

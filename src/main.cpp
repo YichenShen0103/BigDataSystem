@@ -7,6 +7,11 @@
 #include <filesystem>
 using namespace std;
 
+/*
+ * @brief 主函数
+ * @param argc 参数个数
+ * @param argv 参数列表
+ */
 int main(int argc, char *argv[])
 {
     if (argc != 2)
